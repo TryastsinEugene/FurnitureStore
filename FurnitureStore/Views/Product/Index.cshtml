@@ -1,0 +1,98 @@
+﻿@model ProductListViewModel
+@{ 
+    Layout = "_ProductsLayout";
+}
+
+
+            <div class="row flex-lg-nowrap">
+                <div class="col mb-3">
+                    <div class="e-panel card">
+                        <div class="card-body">
+                            <div class="e-table">
+                                <div class="table-responsive table-lg mt-3">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Photo</th>
+                                                <th class="max-width">Name</th>
+                                                <th class="sortable">Price</th>
+                                                <th class="max-width">Category</th>
+                                                <th> </th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach(Product product in Model.Products)
+                                                {
+                                            <tr>
+                                                <td class="align-middle text-center">
+                                                    <div class="bg-light d-inline-flex justify-content-center align-items-center align-top" style="width: 35px; height: 35px; border-radius: 3px;"> <img src="~/icon/@product.ProductPicture" alt="#" /></div>
+                                                </td>
+                                                <td class="text-nowrap align-middle">@product.Name</td>
+                                                <td class="text-nowrap align-middle"><span>@product.Price.ToString("c")</span></td>
+                                                <td class="text-nowrap align-middle">@product.Category.Name</td>
+                                                <td class="text-center align-middle">
+                                                    @if (product.Active)
+                                                    {
+                                                        <i class="fa fa-fw text-secondary cursor-pointer fa-toggle-on"></i>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="fa fa-fw text-secondary cursor-pointer fa-toggle-off"></i>
+                                                    }
+                                                </td>
+                                                <td class="text-center align-middle">
+                                                    <form asp-action="Delete" method="post">
+                                                        <div class="btn-group align-top">
+                                                            <a asp-action="UpdateDelete" asp-route-key="@product.Id"
+                                                               class="btn btn-sm btn-outline-secondary badge">
+                                                                Edit
+                                                            </a>
+                                                            <input type="hidden" name="Id" value="@product.Id" />
+                                                            <button class="btn btn-sm btn-outline-secondary badge" type="submit"><i class="fa fa-trash"></i></button>
+                                                        </div>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                                }
+                                           
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div page-model="@Model.PagingInfo" page-action="Index" page-classes-enabled="true"
+                                     page-class="btn" page-class-normal="btn-outline-dark" page-class-selected="btn-primary" 
+                                     page-url-category="@Model.CurrentCategory" class="btn-group pull-right m-1">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-3 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="text-center px-xl-3">
+                                <a class="btn btn-success btn-block"  asp-action="UpdateDelete" asp-route-key="0" >New Product</a>
+                            </div>
+                            <hr class="my-3">
+                            <div class="e-navlist e-navlist--active-bold">
+                                <ul class="nav">
+                                    <li class="nav-item active"><a href="" class="nav-link"><span>All</span>&nbsp;<small>/&nbsp;@Model.Products.Count()</small></a></li>
+                                    <li class="nav-item"><a href="" class="nav-link"><span>Active</span>&nbsp;<small>/&nbsp;@Model.Products.Where(p => p.Active == true).Count()</small></a></li>
+                                </ul>
+                            </div>
+                            <hr class="my-3">
+                            <div>
+
+                                <div class="form-group">
+                                    <label>Search by Name:</label>
+                                    <div><input class="form-control w-100" type="text" placeholder="Name" value=""></div>
+                                </div>
+                            </div>
+                            <hr class="my-3">
+                        </div>
+                    </div>
+                </div>
+            </div>
+          
+        
+    

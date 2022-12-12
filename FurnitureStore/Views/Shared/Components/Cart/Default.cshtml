@@ -1,0 +1,21 @@
+﻿@model CartEF
+    <div>
+@if (Model?.Selections?.Count() > 0)
+{
+
+    <small class="navbar-text">
+        @Model.Selections.Count() items,
+        $@(Model.Selections.Sum(l => l.Quantity
+* l.Product.Price).ToString("f2"))
+    </small>
+    }
+    <a class="btn navbar-btn" asp-controller="Cart" asp-action="Index"><img style="margin-right: 15px;" src="~/icon/3.png" alt="#" /></a>
+    @*if (ViewContext.RouteData.Values["controller"] as string != "CartEF")
+        {
+            <a asp-action="Index" asp-controller="Cart"
+               class="btn btn-sm btn-light">
+                Checkout
+            </a>
+        }*@
+</div>
+

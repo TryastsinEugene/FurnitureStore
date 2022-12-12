@@ -1,0 +1,55 @@
+﻿@model ProductListViewModel
+@{
+    ViewData["Title"] = "Products";
+}
+
+<div class="contactus">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="title">
+                    <h2>Our Product</h2>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ourproduct">
+    <div class="container">
+        <div class="row product_style_3">
+            @foreach (var product in Model.Products)
+            {
+               
+                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                        <div class="full product">
+                            <div class="product_img">
+                                <div class="center">
+                                    <img src="~/icon/@product.ProductPicture" alt="#" />
+                                    <form id="@product.Id" asp-action="AddToCart"
+                                          asp-controller="Cart" method="post" class="overlay_hover">
+                                        <input type="hidden" name="Id" value="@product.Id" />
+                                        <input type="hidden" name="Name"
+                                               value="@product.Name" />
+                                        <input type="hidden" name="Price"
+                                               value="@product.Price" />
+                                        <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
+                                        <button class="add-bt" type="submit">+ Add to cart</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="product_detail text_align_center">
+                                <p class="product_price">@product.Price.ToString("c") <span class="old_price">$679.89</span></p>
+                                <p class="product_descr">@product.Name</p>
+                            </div>
+                        </div>
+                    </div>
+                
+            }
+
+        </div>
+    </div>
+    <div page-model="@Model.PagingInfo" page-action="Product" page-classes-enabled="true"
+     page-class="btn" page-class-normal="btn-outline-dark" page-class-selected="btn-primary"
+     page-url-category="@Model.CurrentCategory" class="btn-group pull-right m-1"></div>
+</div>
